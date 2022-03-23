@@ -1,7 +1,7 @@
 const { Op } = require('sequelize')
 const { Auth, User, Rol } = require('../models')
 const bcryptjs = require('bcryptjs')
-
+const { Email } = require('../utils')
 class AuthController {
     getSingIn(req,res){
         res.render('auth/index',{title:'Iniciar Sesión'})
@@ -56,6 +56,7 @@ class AuthController {
         const rol = await Rol.findOne({where: {rol: 'invitado'}})
         try{
             await User.create({ci:ci, name:name, surname:surname, email:email, password:bcryptjs.hashSync(password,10), rol_id:rol.id})
+            Email.Register(name,surname,ci,email,password)
             res.redirect('/signin')
         }
         catch {

@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-
-const conn = new Sequelize('gestion_bibliotecaria', 'root', '',{
-    host: 'localhost',
+const {  db_host, db_name, db_pass, db_user  } = require('./setting')
+const conn = new Sequelize(db_name, db_user, db_pass,{
+    host: db_host,
     dialect: 'mariadb' || 'mysql'
 })
 
